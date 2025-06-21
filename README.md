@@ -25,7 +25,9 @@ No logins. No popups. Just productivity.
 
 ## 🌐 Live Site
 
-👉 [https://wordkit.in](https://wordkit.in)
+👉 🌐 **[Visit the Live Website →](https://wordkit.in)**  
+_(Hosted on GitHub Pages, custom domain: wordkit.in)_
+
 
 ---
 
