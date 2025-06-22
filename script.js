@@ -34,6 +34,44 @@ document.addEventListener('DOMContentLoaded', function() {
     if (sessionStorage.getItem('announcementDismissed') === 'true' && announcementBar) {
         announcementBar.style.display = 'none';
     }
+    
+    // Tool category collapsible functionality for mobile
+    const categoryToggles = document.querySelectorAll('.tool-category-toggle');
+    
+    categoryToggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            // Get the parent container and tool group
+            const container = this.closest('.tool-category-container');
+            const toolGroup = container.querySelector('.tool-group');
+            
+            // Toggle the expanded class
+            container.classList.toggle('expanded');
+            
+            // Update the icon
+            const icon = this.querySelector('i');
+            if (container.classList.contains('expanded')) {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        });
+    });
+    
+    // Expand the category containing the active tool by default
+    const activeTool = document.querySelector('.tool.active');
+    if (activeTool) {
+        const activeContainer = activeTool.closest('.tool-category-container');
+        if (activeContainer) {
+            activeContainer.classList.add('expanded');
+            const toggleIcon = activeContainer.querySelector('.tool-category-toggle i');
+            if (toggleIcon) {
+                toggleIcon.classList.remove('fa-chevron-down');
+                toggleIcon.classList.add('fa-chevron-up');
+            }
+        }
+    }
     // Typing animation for hero section
     const toolTyping = document.getElementById('tool-typing');
     const toolsToType = [

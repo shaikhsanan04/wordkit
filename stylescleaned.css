@@ -88,6 +88,10 @@
     --bg-primary: #ffffff;
     --bg-secondary: #f8f9fa;
     --bg-tertiary: #e9ecef;
+    /* RGB versions for transparency effects */
+    --bg-primary-rgb: 255, 255, 255;
+    --bg-secondary-rgb: 248, 249, 250;
+    --bg-tertiary-rgb: 233, 236, 239;
     --text-primary: #212529;
     --text-secondary: #495057;
     --text-tertiary: #6c757d;
@@ -98,6 +102,7 @@
     --warning: #f48c06;
     --error: #d00000;
     --border-color: #dee2e6;
+    --border-color-rgb: 222, 226, 230;
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -112,6 +117,10 @@
     --bg-primary: #121212;
     --bg-secondary: #1e1e1e;
     --bg-tertiary: #2d2d2d;
+    /* RGB versions for transparency effects */
+    --bg-primary-rgb: 18, 18, 18;
+    --bg-secondary-rgb: 30, 30, 30;
+    --bg-tertiary-rgb: 45, 45, 45;
     --text-primary: #f8f9fa;
     --text-secondary: #e9ecef;
     --text-tertiary: #dee2e6;
@@ -119,6 +128,7 @@
     --accent-secondary: #4895ef;
     --accent-tertiary: #4361ee;
     --border-color: #444444;
+    --border-color-rgb: 68, 68, 68;
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -1138,6 +1148,36 @@ footer {
     margin-bottom: 0.5rem;
 }
 
+/* Collapsible Tool Categories for Mobile */
+.tool-category-container {
+    position: relative;
+    width: 100%;
+}
+
+.tool-category-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.tool-category-toggle:hover {
+    color: var(--accent-primary);
+}
+
+.tool-group {
+    display: block;
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+    max-height: 1000px; /* Default large value to contain all tools */
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .tools-container {
@@ -1145,32 +1185,63 @@ footer {
     }
 
     .tool-selector {
-        display: flex;
-        overflow-x: auto;
+        display: block;
         padding: 1rem;
-        gap: 0.5rem;
-        flex-wrap: wrap;
-        justify-content: center;
+        overflow-y: auto;
+        max-height: 300px;
+    }
+    
+    .tool-category-container {
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 0.5rem;
     }
     
     .tool-category {
         width: 100%;
-        text-align: center;
-        padding: 1rem 0 0.5rem;
+        text-align: left;
+        padding: 1rem 2.5rem 1rem 1.5rem;
+        cursor: pointer;
+        margin: 0;
+        border-top: none;
+    }
+
+    .tool-category-toggle {
+        display: block;
+    }
+    
+    /* Hide tool groups by default on mobile */
+    .tool-group {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    
+    /* Show tool group when container is expanded */
+    .tool-category-container.expanded .tool-group {
+        max-height: 500px; /* Adjust based on your content */
+    }
+
+
+    .tool-group {
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .tool-group.expanded {
+        max-height: 1000px;
     }
 
     .tool {
-        flex-direction: column;
-        padding: 0.75rem;
-        border-left: none;
-        border-bottom: 3px solid transparent;
-        text-align: center;
-        min-width: 80px;
+        padding: 0.75rem 1.5rem;
+        border-left: 3px solid transparent;
+        text-align: left;
+        display: flex;
+        flex-direction: row;
     }
 
     .tool.active {
-        border-left: none;
-        border-bottom: 3px solid var(--accent-primary);
+        border-left: 3px solid var(--accent-primary);
+        border-bottom: none;
     }
 
     .tool-content {
@@ -1290,4 +1361,112 @@ footer {
 @keyframes slideOut {
     from { transform: translateX(0); opacity: 1; }
     to { transform: translateX(100%); opacity: 0; }
+}
+
+/* Suggestion Box Styles */
+.suggestion-box {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.suggestion-content {
+    /* Use theme variables for colors to support both light and dark modes */
+    background: rgba(var(--bg-tertiary-rgb, 45, 45, 45), 0.85); /* Theme-aware background with transparency */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--card-radius);
+    border: 1px solid rgba(var(--border-color-rgb, 68, 68, 68), 0.3); /* Theme-aware border */
+    box-shadow: var(--shadow-md);
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+/* Light mode specific adjustments */
+:root:not([data-theme="dark"]) .suggestion-content {
+    background: rgba(var(--bg-tertiary-rgb, 233, 236, 239), 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-content:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(var(--border-color-rgb), 0.3);
+}
+
+.suggestion-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.suggestion-content p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.email-link {
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+    padding: 0 0.25rem;
+}
+
+.email-link:hover {
+    color: var(--accent-secondary);
+    text-decoration: none;
+}
+
+.email-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.email-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    box-shadow: 0 0 8px var(--accent-primary);
+}
+
+/* Responsive styles for suggestion box */
+@media (max-width: 768px) {
+    .suggestion-content {
+        padding: 1.5rem;
+    }
+    
+    .suggestion-content h3 {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .suggestion-box {
+        margin: 1.5rem auto;
+    }
+    
+    .suggestion-content {
+        padding: 1.25rem;
+    }
+    
+    .suggestion-content h3 {
+        font-size: 1.1rem;
+    }
+    
+    .suggestion-content p {
+        font-size: 0.9rem;
+    }
 }
