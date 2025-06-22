@@ -1,392 +1,1472 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- ✅ Basic Meta Tags -->
-    <title>WordKit.in — Free Online Text Tools</title>
-    <meta name="title" content="WordKit.in — Free Online Text Tools">
-    <meta name="description" content="Use WordKit's free tools like word counter, keyword density analyzer, email extractor, and more. No ads, no login — just fast and clean text utilities.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow">
+/* Modern CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    <!-- ✅ Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://wordkit.in/">
-    <meta property="og:title" content="WordKit.in — Free Online Text Tools">
-    <meta property="og:description" content="Your all-in-one toolkit for text cleanup, analysis, and writing — free and ad-free.">
-    <meta property="og:image" content="https://wordkit.in/og-image.jpg"> <!-- Add this image to your site -->
+/* Announcement Bar Styles */
+.announcement-bar {
+    width: 100%;
+    background-color: #4361ee; /* Using accent-primary color from the theme */
+    color: white;
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1000;
+    transform: translateY(-100%);
+    animation: slideDown 0.5s forwards;
+}
+
+@keyframes slideDown {
+    to {
+        transform: translateY(0);
+    }
+}
+
+.announcement-content {
+    flex: 1;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.announcement-cta {
+    color: white;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: var(--transition);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-left: 0.25rem;
+}
+
+.announcement-cta:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+}
+
+.announcement-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    transition: var(--transition);
+}
+
+.announcement-close:hover {
+    opacity: 1;
+}
+
+/* Responsive styles for announcement bar */
+@media (max-width: 768px) {
+    .announcement-content {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .announcement-bar {
+        padding: 0.6rem 1rem;
+    }
+    .announcement-content {
+        font-size: 0.8rem;
+    }
+}
+
+:root {
+    /* Light Theme Variables */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    /* RGB versions for transparency effects */
+    --bg-primary-rgb: 255, 255, 255;
+    --bg-secondary-rgb: 248, 249, 250;
+    --bg-tertiary-rgb: 233, 236, 239;
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --text-tertiary: #6c757d;
+    --accent-primary: #4361ee;
+    --accent-secondary: #3a0ca3;
+    --accent-tertiary: #7209b7;
+    --success: #38b000;
+    --warning: #f48c06;
+    --error: #d00000;
+    --border-color: #dee2e6;
+    --border-color-rgb: 222, 226, 230;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --card-radius: 12px;
+    --btn-radius: 8px;
+    --input-radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-tertiary: #2d2d2d;
+    /* RGB versions for transparency effects */
+    --bg-primary-rgb: 18, 18, 18;
+    --bg-secondary-rgb: 30, 30, 30;
+    --bg-tertiary-rgb: 45, 45, 45;
+    --text-primary: #f8f9fa;
+    --text-secondary: #e9ecef;
+    --text-tertiary: #dee2e6;
+    --accent-primary: #4cc9f0;
+    --accent-secondary: #4895ef;
+    --accent-tertiary: #4361ee;
+    --border-color: #444444;
+    --border-color-rgb: 68, 68, 68;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: var(--transition);
+    min-height: 100vh;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--accent-primary);
+}
+
+.logo i {
+    font-size: 1.75rem;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.theme-toggle {
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--text-tertiary);
+    transition: var(--transition);
+}
+
+.theme-toggle:hover {
+    color: var(--accent-primary);
+    transform: scale(1.1);
+}
+
+/* Hero Section Styles */
+.hero-section {
+    width: 100%;
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.typing-effect {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.hero-support {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.hero-support a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.hero-support a:hover {
+    text-decoration: underline;
+    color: var(--accent-secondary);
+}
+
+/* Responsive Hero Section */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 3rem 1.5rem;
+    }
     
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://wordkit.in/">
-    <meta name="twitter:title" content="WordKit.in — Free Online Text Tools">
-    <meta name="twitter:description" content="Use tools like word counter, sentiment analysis, keyword density checker, email extractor and more — all for free.">
-    <meta name="twitter:image" content="https://wordkit.in/og-image.jpg">
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 2rem 1rem;
+    }
+    
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}/* Hero Section Styles */
+.hero-section {
+    width: 100%;
+    padding: 4rem 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.typing-effect {
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Responsive Hero Section */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 3rem 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 2rem 1rem;
+    }
+    
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* Main Content Styles */
+main {
+    flex: 1;
+    padding: 2rem 0;
+}
+
+.tools-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 2rem;
+    background-color: var(--bg-secondary);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+/* Tool Selector Styles */
+.tool-selector {
+    background-color: var(--bg-tertiary);
+    padding: 1.5rem 0;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.tool-category {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-tertiary);
+    padding: 1rem 1.5rem 0.5rem;
+    margin: 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.tool-category:first-child {
+    border-top: none;
+}
+
+.tool {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-secondary);
+    border-left: 3px solid transparent;
+    font-size: 0.95rem;
+}
+
+.tool:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--accent-primary);
+}
+
+.tool.active {
+    background-color: rgba(67, 97, 238, 0.15);
+    color: var(--accent-primary);
+    border-left: 3px solid var(--accent-primary);
+    font-weight: 500;
+}
+
+.tool i {
+    font-size: 1.25rem;
+    width: 24px;
+    text-align: center;
+}
+
+/* Tool Content Styles */
+.tool-content {
+    padding: 2rem;
+}
+
+.tool-header {
+    margin-bottom: 1.5rem;
+}
+
+.tool-header h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.tool-header p {
+    color: var(--text-tertiary);
+    font-size: 0.95rem;
+}
+
+/* Input Container Styles */
+.input-container {
+    margin-bottom: 1.5rem;
+}
+
+textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--input-radius);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    transition: var(--transition);
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    justify-content: flex-end;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: var(--btn-radius);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.btn:hover {
+    background-color: var(--border-color);
+}
+
+.btn.primary {
+    background-color: var(--accent-primary);
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color: var(--accent-secondary);
+    transform: translateY(-2px);
+}
+
+/* Results Container Styles */
+.results-container {
+    background-color: var(--bg-primary);
+    border-radius: var(--card-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.tool-results {
+    display: none;
+}
+
+.tool-results.active {
+    display: block;
+}
+
+/* Word Counter Results Styles */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background-color: var(--bg-secondary);
+    border-radius: var(--card-radius);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-card i {
+    font-size: 1.5rem;
+    color: var(--accent-primary);
+    background-color: rgba(67, 97, 238, 0.1);
+    padding: 0.75rem;
+    border-radius: 50%;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+}
+
+/* Email Extractor Results Styles */
+.extracted-emails h3 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.results-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.email-item {
+    background-color: var(--bg-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.email-item i {
+    color: var(--accent-primary);
+    font-size: 0.85rem;
+}
+
+/* Whitespace Remover Results Styles */
+.whitespace-results h3,
+.case-results h3 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.output-text {
+    background-color: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: var(--input-radius);
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-primary);
+    min-height: 100px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border: 1px solid var(--border-color);
+}
+
+/* Case Converter Results Styles */
+.case-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.case-btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: var(--btn-radius);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.case-btn:hover {
+    background-color: var(--border-color);
+}
+
+.case-btn.active {
+    background-color: var(--accent-primary);
+    color: white;
+}
+
+/* Footer Styles */
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-support {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.footer-support a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-support a:hover {
+    text-decoration: underline;
+    color: var(--accent-secondary);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-links a {
+    color: var(--text-tertiary);
+    font-size: 1.25rem;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    color: var(--accent-primary);
+    transform: translateY(-3px);
+}
+
+/* Additional Tool Results Styles */
+
+/* Readability Score Styles */
+.readability-explanation {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: var(--card-radius);
+    border-left: 4px solid var(--accent-primary);
+}
+
+/* Keyword Density Styles */
+.keyword-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.option-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.option-group input {
+    width: 60px;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--input-radius);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.keywords-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.keyword-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: var(--btn-radius);
+    transition: var(--transition);
+}
+
+.keyword-item:hover {
+    transform: translateX(5px);
+}
+
+.keyword-text {
+    font-weight: 500;
+}
+
+.keyword-count {
+    background-color: var(--accent-primary);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* Sentiment Analysis Styles */
+.sentiment-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.sentiment-meter {
+    width: 100%;
+    max-width: 500px;
+    height: 60px;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.meter-scale {
+    display: flex;
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.negative-zone, .neutral-zone, .positive-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.negative-zone {
+    background-color: #d00000;
+    width: 33.33%;
+}
+
+.neutral-zone {
+    background-color: #ffba08;
+    width: 33.33%;
+}
+
+.positive-zone {
+    background-color: #38b000;
+    width: 33.33%;
+}
+
+.meter-pointer {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    width: 2px;
+    height: 30px;
+    background-color: var(--text-primary);
+    transform: translateX(-50%);
+    transition: left 0.5s ease;
+}
+
+.meter-pointer::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: var(--text-primary);
+    border-radius: 50%;
+}
+
+.sentiment-value {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#sentiment-score {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.sentiment-label {
+    font-size: 1rem;
+    color: var(--text-tertiary);
+}
+
+/* Reading Time Styles */
+.reading-speed-settings {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: var(--card-radius);
+}
+
+.speed-slider {
+    margin-top: 1rem;
+}
+
+.speed-slider label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.speed-slider input {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+/* Markdown to HTML Styles */
+.code-output {
+    font-family: monospace;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    background-color: var(--bg-tertiary);
+    padding: 1rem;
+    border-radius: var(--input-radius);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.preview-panel {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--input-radius);
+    padding: 1rem;
+    min-height: 200px;
+    overflow: auto;
+}
+
+.markdown-preview, .preview-container {
+    margin-bottom: 1.5rem;
+}
+
+/* URL and Phone Extractor Styles */
+.url-item, .phone-item, .result-item {
+    background-color: var(--bg-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.url-item i, .phone-item i, .result-item i {
+    color: var(--accent-primary);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+/* Plagiarism Checker Styles */
+.plagiarism-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.plagiarism-options select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--input-radius);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: inherit;
+}
+
+.plagiarism-status {
+    margin-bottom: 1.5rem;
+}
+
+.progress-container {
+    width: 100%;
+    height: 10px;
+    background-color: var(--bg-tertiary);
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0;
+    background-color: var(--accent-primary);
+    transition: width 0.3s ease;
+}
+
+#plagiarism-status-text {
+    font-size: 0.9rem;
+    color: var(--text-tertiary);
+    text-align: center;
+}
+
+.plagiarism-results-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
+}
+
+.similarity-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent-primary) 0%, var(--bg-tertiary) 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.score-circle::before {
+    content: '';
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background-color: var(--bg-primary);
+}
+
+#similarity-percentage {
+    position: relative;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.score-label {
+    font-size: 1rem;
+    color: var(--text-tertiary);
+}
+
+.matches-container {
+    grid-column: 1 / -1;
+}
+
+.matches-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.match-item {
+    background-color: var(--bg-secondary);
+    border-radius: var(--card-radius);
+    padding: 1rem;
+    border-left: 4px solid var(--accent-primary);
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.match-source {
+    font-weight: 500;
+    color: var(--accent-primary);
+    text-decoration: none;
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.match-source:hover {
+    text-decoration: underline;
+}
+
+.match-similarity {
+    background-color: var(--accent-primary);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+}
+
+.match-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    background-color: var(--bg-tertiary);
+    padding: 0.75rem;
+    border-radius: var(--input-radius);
+    position: relative;
+}
+
+.match-text::before {
+    content: '"';
+    position: absolute;
+    left: 0.25rem;
+    top: 0;
+    font-size: 1.5rem;
+    color: var(--text-tertiary);
+}
+
+.match-text::after {
+    content: '"';
+    position: absolute;
+    right: 0.25rem;
+    bottom: 0;
+    font-size: 1.5rem;
+    color: var(--text-tertiary);
+}
+
+.plagiarism-explanation {
+    grid-column: 1 / -1;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: var(--card-radius);
+    border-left: 4px solid var(--accent-primary);
+}
+
+/* Slug Generator Styles */
+.slug-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.slug-options select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--input-radius);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: inherit;
+}
+
+.slug-results {
+    margin-top: 1.5rem;
+}
+
+.slug-output-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+#slug-output {
+    flex: 1;
+    padding: 1rem;
+    background-color: var(--bg-tertiary);
+    border-radius: var(--input-radius);
+    font-family: monospace;
+    word-break: break-all;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.slug-explanation {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+    border-radius: var(--card-radius);
+    border-left: 4px solid var(--accent-primary);
+}
+
+.slug-examples {
+    margin-top: 1rem;
+}
+
+.slug-examples h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.slug-examples ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.slug-examples li {
+    margin-bottom: 0.5rem;
+}
+
+/* Collapsible Tool Categories for Mobile */
+.tool-category-container {
+    position: relative;
+    width: 100%;
+}
+
+.tool-category-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.tool-category-toggle:hover {
+    color: var(--accent-primary);
+}
+
+.tool-group {
+    display: block;
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+    max-height: 1000px; /* Default large value to contain all tools */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .tools-container {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-selector {
+        display: block;
+        padding: 1rem;
+        overflow-y: auto;
+        max-height: 300px;
+    }
+    
+    .tool-category-container {
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    .tool-category {
+        width: 100%;
+        text-align: left;
+        padding: 1rem 2.5rem 1rem 1.5rem;
+        cursor: pointer;
+        margin: 0;
+        border-top: none;
+    }
+
+    .tool-category-toggle {
+        display: block;
+    }
+    
+    /* Hide tool groups by default on mobile */
+    .tool-group {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    
+    /* Show tool group when container is expanded */
+    .tool-category-container.expanded .tool-group {
+        max-height: 500px; /* Adjust based on your content */
+    }
 
 
-    <link rel="stylesheet" href="stylescleaned.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <meta name="google-site-verification" content="zErY9xuNqUIkfKlhbH_USs4NfcYRQ9JFC7fqt15iO_w" />
-</head>
-<body>
-    <div class="announcement-bar" id="announcement-bar">
-        <div class="announcement-content">
-            🔥 New Feature Alert: Duplicate Lines Remover is coming soon! Clean up your text in seconds </a> 
-            <!-- — <a href="#" class="announcement-cta">wait for it!</a> -->
-        </div>
-        <button class="announcement-close" id="close-announcement" aria-label="Close announcement">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    <div class="app-container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-text-height"></i>
-                <h1>Wordkit</h1>
-            </div>
-            <div class="theme-toggle">
-                <i class="fas fa-moon"></i>
-            </div>
-        </header>
+    .tool-group {
+        max-height: 0;
+        overflow: hidden;
+    }
 
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    Not just one tool – <span class="typing-effect" id="tool-typing"></span>
-                </h1>
-                <p class="hero-subtitle">
-                    Everything you need to write, analyze, and clean your text — in one fast, free, ad-free space.
-                </p>
-                <p class="hero-support">
-                    Like what I built? <a href="https://coff.ee/sananshaikh" target="_blank"> Support it by buying me a coffee ☕ </a>
-                </p>
-            </div>
-        </section>
+    .tool-group.expanded {
+        max-height: 1000px;
+    }
 
-        <main>
-            <div class="tools-container">
-                <div class="tool-selector">
-                    <h3 class="tool-category">Basic Tools</h3>
-                    <div class="tool active" data-tool="word-counter">
-                        <i class="fas fa-calculator"></i>
-                        <span>Word Counter</span>
-                    </div>
+    .tool {
+        padding: 0.75rem 1.5rem;
+        border-left: 3px solid transparent;
+        text-align: left;
+        display: flex;
+        flex-direction: row;
+    }
 
-                    <div class="tool" data-tool="whitespace-remover">
-                        <i class="fas fa-compress-alt"></i>
-                        <span>Whitespace Remover</span>
-                    </div>
-                    <div class="tool" data-tool="case-converter">
-                        <i class="fas fa-font"></i>
-                        <span>Case Converter</span>
-                    </div>
-                    
-                    <h3 class="tool-category">Text Analysis</h3>
-                    <div class="tool" data-tool="readability-score">
-                        <i class="fas fa-book-reader"></i>
-                        <span>Readability Score</span>
-                    </div>
-                    <div class="tool" data-tool="keyword-density">
-                        <i class="fas fa-chart-pie"></i>
-                        <span>Keyword Density</span>
-                    </div>
-                    <div class="tool" data-tool="sentiment-analysis">
-                        <i class="fas fa-smile"></i>
-                        <span>Sentiment Analysis</span>
-                    </div>
-                    <div class="tool" data-tool="reading-time">
-                        <i class="fas fa-stopwatch"></i>
-                        <span>Reading Time</span>
-                    </div>
-                    
-                    
-                    
-                    <h3 class="tool-category">Extraction</h3>
+    .tool.active {
+        border-left: 3px solid var(--accent-primary);
+        border-bottom: none;
+    }
 
-                    <div class="tool" data-tool="email-extractor">
-                        <i class="fas fa-at"></i>
-                        <span>Email Extractor</span>
-                    </div>
-                    
-                    <div class="tool" data-tool="url-extractor">
-                        <i class="fas fa-link"></i>
-                        <span>URL Extractor</span>
-                    </div>
-                    <div class="tool" data-tool="phone-extractor">
-                        <i class="fas fa-phone"></i>
-                        <span>Phone Extractor</span>
-                    </div>
-                    
-                    <h3 class="tool-category">Specialized Tools</h3>
-                    <div class="tool" data-tool="slug-generator">
-                        <i class="fas fa-link"></i>
-                        <span>Slug Generator</span>
-                    </div>
-                </div>
+    .tool-content {
+        padding: 1.5rem;
+    }
 
-                <div class="tool-content">
-                    <div class="tool-header">
-                        <h2 id="current-tool-title">Word Counter</h2>
-                        <p id="tool-description">Count the number of words, characters, sentences, and paragraphs in your text.</p>
-                    </div>
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-                    <div class="input-container">
-                        <textarea id="input-text" placeholder="Type or paste your text here..."></textarea>
-                        <div class="actions">
-                            <button id="clear-btn" class="btn"><i class="fas fa-trash-alt"></i> Clear</button>
-                            <button id="copy-btn" class="btn"><i class="fas fa-copy"></i> Copy</button>
-                            <button id="action-btn" class="btn primary"><i class="fas fa-play"></i> Process</button>
-                        </div>
-                    </div>
+    .actions {
+        flex-wrap: wrap;
+    }
 
-                    <div class="results-container">
-                        <div id="word-counter-results" class="tool-results active">
-                            <div class="stats-grid">
-                                <div class="stat-card">
-                                    <i class="fas fa-font"></i>
-                                    <div class="stat-info">
-                                        <span class="stat-value" id="word-count">0</span>
-                                        <span class="stat-label">Words</span>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <i class="fas fa-keyboard"></i>
-                                    <div class="stat-info">
-                                        <span class="stat-value" id="char-count">0</span>
-                                        <span class="stat-label">Characters</span>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <i class="fas fa-align-left"></i>
-                                    <div class="stat-info">
-                                        <span class="stat-value" id="sentence-count">0</span>
-                                        <span class="stat-label">Sentences</span>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <i class="fas fa-paragraph"></i>
-                                    <div class="stat-info">
-                                        <span class="stat-value" id="paragraph-count">0</span>
-                                        <span class="stat-label">Paragraphs</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    .btn {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .keyword-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .option-group {
+        justify-content: space-between;
+    }
+    
+    .sentiment-meter {
+        max-width: 100%;
+    }
 
-                        <div id="email-extractor-results" class="tool-results">
-                            <div class="extracted-emails">
-                                <h3>Extracted Emails <span id="email-count">(0)</span></h3>
-                                <div id="emails-list" class="results-list"></div>
-                            </div>
-                        </div>
+    footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}
 
-                        <div id="whitespace-remover-results" class="tool-results">
-                            <div class="whitespace-results">
-                                <h3>Processed Text</h3>
-                                <div id="whitespace-output" class="output-text"></div>
-                            </div>
-                        </div>
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
 
-                        <div id="case-converter-results" class="tool-results">
-                            <div class="case-options">
-                                <button class="case-btn" data-case="upper">UPPERCASE</button>
-                                <button class="case-btn" data-case="lower">lowercase</button>
-                                <button class="case-btn" data-case="title">Title Case</button>
-                                <button class="case-btn" data-case="sentence">Sentence case</button>
-                                <button class="case-btn" data-case="alternating">aLtErNaTiNg CaSe</button>
-                            </div>
-                            <div class="case-results">
-                                <h3>Converted Text</h3>
-                                <div id="case-output" class="output-text"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- Readability Score Results -->
-                        <div id="readability-score-results" class="tool-results">
-                            <div class="stats-grid">
-                                <div class="stat-card">
-                                    <i class="fas fa-book-reader"></i>
-                                    <div class="stat-info">
-                                        <span class="stat-value" id="flesch-score">0</span>
-                                        <span class="stat-label">Flesch Reading Ease</span>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    <div class="stat-info">
-                                        <span class="stat-value" id="grade-level">0</span>
-                                        <span class="stat-label">Grade Level</span>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <i class="fas fa-book"></i>
-                                    <div class="stat-info">
-                                        <span class="stat-value" id="reading-ease">-</span>
-                                        <span class="stat-label">Reading Ease</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="readability-explanation">
-                                <h3>What does this mean?</h3>
-                                <p id="readability-explanation">Enter text to see readability analysis.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Keyword Density Results -->
-                        <div id="keyword-density-results" class="tool-results">
-                            <div class="keyword-options">
-                                <div class="option-group">
-                                    <label for="min-word-length">Min Word Length:</label>
-                                    <input type="number" id="min-word-length" value="3" min="1" max="10">
-                                </div>
-                                <div class="option-group">
-                                    <label for="max-keywords">Max Keywords:</label>
-                                    <input type="number" id="max-keywords" value="10" min="5" max="50">
-                                </div>
-                                <button id="update-keywords-btn" class="btn primary"><i class="fas fa-sync"></i> Update</button>
-                            </div>
-                            <div class="keywords-chart-container">
-                                <h3>Top Keywords</h3>
-                                <div id="keywords-list" class="keywords-list"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- Sentiment Analysis Results -->
-                        <div id="sentiment-analysis-results" class="tool-results">
-                            <div class="sentiment-score">
-                                <div class="sentiment-meter">
-                                    <div class="meter-scale">
-                                        <div class="negative-zone">Negative</div>
-                                        <div class="neutral-zone">Neutral</div>
-                                        <div class="positive-zone">Positive</div>
-                                    </div>
-                                    <div class="meter-pointer" id="sentiment-pointer"></div>
-                                </div>
-                                <div class="sentiment-value">
-                                    <span id="sentiment-score">0</span>
-                                    <span class="sentiment-label" id="sentiment-label">Neutral</span>
-                                </div>
-                            </div>
-                            <div class="sentiment-details">
-                                <h3>Sentiment Details</h3>
-                                <p id="sentiment-explanation">Enter text to analyze sentiment.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Reading Time Results -->
-                        <div id="reading-time-results" class="tool-results">
-                            <div class="stats-grid">
-                                <div class="stat-card">
-                                    <i class="fas fa-stopwatch"></i>
-                                    <div class="stat-info">
-                                        <span class="stat-value" id="reading-time">0 min</span>
-                                        <span class="stat-label">Average Reading Time</span>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <i class="fas fa-running"></i>
-                                    <div class="stat-info">
-                                        <span class="stat-value" id="skimming-time">0 min</span>
-                                        <span class="stat-label">Skimming Time</span>
-                                    </div>
-                                </div>
-                                <div class="stat-card">
-                                    <i class="fas fa-user-graduate"></i>
-                                    <div class="stat-info">
-                                        <span class="stat-value" id="detailed-time">0 min</span>
-                                        <span class="stat-label">Detailed Reading</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="reading-speed-settings">
-                                <h3>Reading Speed Settings</h3>
-                                <div class="speed-slider">
-                                    <label for="reading-speed">Words per minute: <span id="wpm-value">200</span></label>
-                                    <input type="range" id="reading-speed" min="100" max="500" value="200" step="10">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        
-                        
-                        
-                        <!-- URL Extractor Results -->
-                        <div id="url-extractor-results" class="tool-results">
-                            <div class="extracted-urls">
-                                <h3>Extracted URLs <span id="url-count">(0)</span></h3>
-                                <div id="urls-list" class="results-list"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- Phone Extractor Results -->
-                        <div id="phone-extractor-results" class="tool-results">
-                            <div class="extracted-phones">
-                                <h3>Extracted Phone Numbers <span id="phone-count">(0)</span></h3>
-                                <div id="phones-list" class="results-list"></div>
-                            </div>
-                        </div>
-                        
+    .case-options {
+        flex-direction: column;
+    }
 
-                        
-                        <!-- Slug Generator Results -->
-                        <div id="slug-generator-results" class="tool-results">
-                            <div class="slug-options">
-                                <div class="option-group">
-                                    <label for="slug-separator">Separator:</label>
-                                    <select id="slug-separator">
-                                        <option value="-" selected>Hyphen (-)</option>
-                                        <option value="_">Underscore (_)</option>
-                                        <option value="">None</option>
-                                    </select>
-                                </div>
-                                <div class="option-group">
-                                    <label for="slug-case">Case:</label>
-                                    <select id="slug-case">
-                                        <option value="lowercase" selected>Lowercase</option>
-                                        <option value="uppercase">Uppercase</option>
-                                    </select>
-                                </div>
-                                <button id="generate-slug-btn" class="btn primary"><i class="fas fa-link"></i> Generate Slug</button>
-                            </div>
-                            <div class="slug-results">
-                                <h3>Generated Slug</h3>
-                                <div class="slug-output-container">
-                                    <div id="slug-output" class="output-text"></div>
-                                    <button id="copy-slug-btn" class="btn"><i class="fas fa-copy"></i> Copy</button>
-                                </div>
-                                <div class="slug-explanation">
-                                    <h3>What is a slug?</h3>
-                                    <p>A slug is a URL-friendly version of a string, typically used in web addresses. Slugs are lowercase, with spaces replaced by hyphens or underscores, and special characters removed.</p>
-                                    <div class="slug-examples">
-                                        <h4>Examples:</h4>
-                                        <ul>
-                                            <li><strong>Original:</strong> "Hello World!" <strong>Slug:</strong> "hello-world"</li>
-                                            <li><strong>Original:</strong> "10 Tips & Tricks" <strong>Slug:</strong> "10-tips-tricks"</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+    .case-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
 
-        <footer>
-            <p>© 2025 Wordkit - Modern Text Utilities</p>
-            <div class="social-links">
-                <a href="https://github.com/shaikhsanan04" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://x.com/shaikhsanan_" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.linkedin.com/in/sanan-shaikh-web-developer-web-designer-wordpress-developer?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            </div>
-            <p class="footer-support">Like what I built? <a href="https://coff.ee/sananshaikh" target="_blank">Support it by buying me a coffee ☕</a></p>
-        </footer>
-    </div>
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-    <script src="script.js"></script>
-</body>
-</html>
+.tool-results.active {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Tooltip Styles */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.8rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Copy Success Animation */
+.copy-success {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--success);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--btn-radius);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: slideIn 0.3s ease-out, slideOut 0.3s ease-in 2s forwards;
+    z-index: 1000;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+/* Suggestion Box Styles */
+.suggestion-box {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.suggestion-content {
+    /* Use theme variables for colors to support both light and dark modes */
+    background: rgba(var(--bg-tertiary-rgb, 45, 45, 45), 0.85); /* Theme-aware background with transparency */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--card-radius);
+    border: 1px solid rgba(var(--border-color-rgb, 68, 68, 68), 0.3); /* Theme-aware border */
+    box-shadow: var(--shadow-md);
+    padding: 2rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+/* Light mode specific adjustments */
+:root:not([data-theme="dark"]) .suggestion-content {
+    background: rgba(var(--bg-tertiary-rgb, 233, 236, 239), 0.9);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-content:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(var(--border-color-rgb), 0.3);
+}
+
+.suggestion-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.suggestion-content p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.email-link {
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+    padding: 0 0.25rem;
+}
+
+.email-link:hover {
+    color: var(--accent-secondary);
+    text-decoration: none;
+}
+
+.email-link::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-tertiary));
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.email-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+    box-shadow: 0 0 8px var(--accent-primary);
+}
+
+/* Responsive styles for suggestion box */
+@media (max-width: 768px) {
+    .suggestion-content {
+        padding: 1.5rem;
+    }
+    
+    .suggestion-content h3 {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .suggestion-box {
+        margin: 1.5rem auto;
+    }
+    
+    .suggestion-content {
+        padding: 1.25rem;
+    }
+    
+    .suggestion-content h3 {
+        font-size: 1.1rem;
+    }
+    
+    .suggestion-content p {
+        font-size: 0.9rem;
+    }
+}
