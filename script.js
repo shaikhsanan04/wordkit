@@ -141,29 +141,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const caseOutput = document.getElementById('case-output');
     const caseBtns = document.querySelectorAll('.case-btn');
     
-    // Tool descriptions
+// Tool descriptions
 const toolDescriptions = {
-    // Basic Tools
-    'word-counter': 'Count the number of words, characters, sentences, and paragraphs in your text.',
-    'email-extractor': 'Extract all email addresses from your text.',
-    'whitespace-remover': 'Remove extra whitespace from your text.',
-    'case-converter': 'Convert your text to different letter cases.',
-    
-    // Text Analysis Tools
-    'readability-score': 'Analyze text complexity using metrics like Flesch-Kincaid Grade Level.',
-    'keyword-density': 'Identify and count the most frequent words in a text.',
-    'sentiment-analysis': 'Determine if text sentiment is positive, negative, or neutral.',
-    'reading-time': 'Calculate approximate reading time based on average reading speed.',
-    
-    // Formatting Tools
-    'markdown-to-html': 'Convert markdown syntax to HTML code.',
-    'html-to-text': 'Strip HTML tags from content.',
-    
-    // Extraction Tools
-    'url-extractor': 'Extract URLs from text.',
-    'phone-extractor': 'Find phone numbers in various formats.',
-    'slug-generator': 'Generate URL-friendly slugs from your text.'
+  // Basic Tools
+  'word-counter': 'Free online word counter for essays, blog posts, and IELTS content. Instantly count words, characters, sentences, and paragraphs — no login required.',
+  'email-extractor': 'Extract email addresses from any block of text. This tool quickly finds and lists all valid emails from articles, documents, or webpages.',
+  'whitespace-remover': 'Remove extra spaces, tabs, and blank lines from your text. Perfect for cleaning up content before publishing or processing.',
+  'case-converter': 'Convert text to UPPERCASE, lowercase, Title Case, Sentence case, or aLtErNaTiNg CaSe. Fast and easy text formatting tool.',
+  
+  // Text Analysis Tools
+  'readability-score': 'Check the readability of your content using Flesch Reading Ease and Grade Level scores. Ideal for improving clarity in articles, essays, and web copy.',
+  'keyword-density': 'Analyze keyword density for SEO optimization. See how often words appear in your text — great for bloggers, marketers, and content creators.',
+  'sentiment-analysis': 'Analyze the emotional tone of your text. Detect whether the sentiment is positive, negative, or neutral — useful for reviews, emails, or social media.',
+  'reading-time': 'Estimate the reading time of your article or blog post. Adjust speed settings for skimming or detailed reading modes.',
+  
+  // Extraction Tools
+  'url-extractor': 'Extract all website URLs from any text or content. Perfect for scraping links from documents, articles, or code.',
+  'phone-extractor': 'Extract phone numbers in multiple formats from text. Supports international and local formats — great for data cleaning or research.',
+  'slug-generator': 'Generate clean, SEO-friendly URL slugs for blog posts, products, or social media. Quickly convert any headline into a readable URL format.'
 };
+
     
     // Readability Score Calculator
     function calculateReadability(text) {
