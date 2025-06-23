@@ -1,4 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+
+    // FAQ Accordion functionality
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const faq = this.closest('.faq');
+            
+            // Toggle active class on the clicked FAQ
+            faq.classList.toggle('active');
+            
+            // Close other FAQs when one is opened (optional, for accordion behavior)
+            const allFaqs = document.querySelectorAll('.faq');
+            allFaqs.forEach(item => {
+                if (item !== faq) {
+                    item.classList.remove('active');
+                }
+            });
+        });
+    });
+
+
     // Announcement bar functionality
     const announcementBar = document.getElementById('announcement-bar');
     const closeAnnouncementBtn = document.getElementById('close-announcement');
